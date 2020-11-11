@@ -1,40 +1,44 @@
-package plugin
+package cache
 
 import (
 	"bufio"
 	"fmt"
 	"io"
+	"log"
 	"os"
 )
 
 type Cache struct {
+	fname string
 	content []string
 }
 
-func loadCache(fname string) (Cache, error) {
-	var c Cache
-
-	//f, err := os.OpenFile(fname, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	f, err := os.Open(fname)
+func New(fname string) Cache {
+	f, err := os.OpenFile(fname, os.O_CREATE|os.O_RDWR|os.O_APPEND, os.ModeAppend)
 	if err != nil {
-		return c, err
+		log.Fatal(err)
 	}
 	defer f.Close()
 
+	var content []string
 	rd := bufio.NewReader(f)
 	for {
 		line, err := rd.ReadString('\n')
-		if err == io.EOF {
+		if err == io.EOF{
 			break
 		}
+
 		if err != nil {
-			return c, err
+			log.Fatal(err)
 		}
-		c.content = append(c.content, line)
+
+		content = append(content, line)
 	}
 
-	return c, nil
-
+	return Cache{
+		fname: fname,
+		content: content,
+	}
 }
 
 func (c *Cache) Dump(key ...string) {

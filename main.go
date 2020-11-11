@@ -54,7 +54,8 @@ func main() {
 				return cli.Exit(Version, 0)
 			}
 
-			return plugin.Run(browser, config, cacheFile)
+			p := plugin.New(browser, config, cacheFile)
+			return p.Run()
 		},
 	}
 

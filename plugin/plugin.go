@@ -1,35 +1,25 @@
 package plugin
 
-import "fmt"
+import (
+	config "github.com/ckalpakoglu/rofi-github/config"
+	gcache "github.com/ckalpakoglu/rofi-github/cache"
+)
 
 type Plugin struct {
 	browser string
-	config string
-	cachefile string
+	conf config.Config
+	cache gcache.Cache
 }
 
-func Run(browser, config, cachefile string) error {
-	p := Plugin{
+func New(browser, configFile, cachefile string) Plugin {
+	return Plugin{
 		browser: browser,
-		config: config,
-		cachefile: cachefile,
+		conf: config.New(configFile),
+		cache: gcache.New(cachefile),
 	}
+}
 
-	// load config
-	conf, err := loadConf(p.config)
-	if err != nil {
-		return fmt.Errorf("failed to load config file: [%v]", err)
-	}
-	fmt.Println(conf.GithubCom.User)
-
-	// load cachefile
-	cache, err := loadCache(p.cachefile)
-	if err != nil {
-		return fmt.Errorf("failed to load cache file: [%v]", err)
-	}
-
-	fmt.Println("===", p.browser)
-	cache.Dump()
-
+func (p Plugin) Run(args ...string) error {
+	p.cache.Dump()
 	return nil
 }
