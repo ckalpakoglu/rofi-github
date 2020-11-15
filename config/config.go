@@ -15,13 +15,13 @@ type Config struct {
 
 type yamlConf struct {
 	GithubCom struct {
-		User string `yaml:"user"`
-		OatuhToken string `yaml:"oauth_token"`
+		User        string `yaml:"user"`
+		OatuhToken  string `yaml:"oauth_token"`
 		GitProtocol string `yaml:"git_protocol"`
 	} `yaml:"github.com"`
 }
 
-func New(fname string) Config {
+func Init(fname, org string) Config {
 	var cfg yamlConf
 
 	buf, err := ioutil.ReadFile(fname)
@@ -34,9 +34,16 @@ func New(fname string) Config {
 		log.Fatal(err)
 	}
 
+	var user string
+	if len(org) > 0 {
+		user = org
+	} else {
+		user = cfg.GithubCom.User
+	}
+
 	return Config{
-		User: cfg.GithubCom.User,
-		OauthToken: cfg.GithubCom.OatuhToken,
+		User:        user,
+		OauthToken:  cfg.GithubCom.OatuhToken,
 		GitProtocol: cfg.GithubCom.GitProtocol,
 	}
 }
