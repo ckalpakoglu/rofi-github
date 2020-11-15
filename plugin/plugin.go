@@ -61,9 +61,9 @@ func (p Plugin) Run(args ...string) error {
 		}
 	}
 
-	//if err := cache.Update(selected); err != nil {
-	//	return err
-	//}
+	if err := cache.Update(selected); err != nil {
+		return err
+	}
 
 	fmt.Println("====>", selected)
 	cmd = exec.Command(p.browser, selected)

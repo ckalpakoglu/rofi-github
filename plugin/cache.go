@@ -35,17 +35,19 @@ func LoadCache(fname string) Cache {
 }
 
 func (c *Cache) Update(selected string) error {
-	//f, err := os.OpenFile(c.fname, os.O_APPEND|os.O_WRONLY, os.ModeAppend)
-	f, err := os.OpenFile(c.fname, os.O_WRONLY, os.ModeAppend)
+	f, err := os.OpenFile(c.fname, os.O_CREATE|os.O_RDWR|os.O_TRUNC, os.ModeAppend)
 	if err != nil {
 		return err
 	}
 	defer f.Close()
 
-	if _, err := f.WriteString(selected); err != nil {
-		return err
+	c.Content = append(c.Content, selected+"\n")
+	w := bufio.NewWriter(f)
+	for i:=0; i <len(c.Content); i++ {
+		w.WriteString(c.Content[i]+"\n")
 	}
 
+	w.Flush()
 	return nil
 }
 
