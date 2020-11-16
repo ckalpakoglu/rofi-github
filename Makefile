@@ -4,12 +4,12 @@ BUILD_DIR       := _release
 BUILD_TIME      := $(shell date +%FT%T%z)
 GO_LDFLAGS      := -ldflags="-s -w -X main.Version=${VERSION}"
 
+export GO111MODULE=on
+
 # checksum
 SHASUMCMD       := $(shell command -v sha256sum || command -v shasum; 2> /dev/null)
 
 .PHONY: all clean
-
-export GO111MODULE=on
 
 all: linux
     @echo Version: $(VERSION)
@@ -19,4 +19,6 @@ linux:
 	${SHASUMCMD} ${BUILD_DIR}/${BUILD_NAME} | cut -d ' ' -f1 > ${BUILD_DIR}/${BUILD_NAME}.sha256
 
 clean:
-	rm -rf ${BUILD_DIR}
+	rm -rf ${BUILD_DIR} 2> /dev/null
+	go clean
+

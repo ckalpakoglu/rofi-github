@@ -46,10 +46,10 @@ func (c *Cache) Update(selected string) error {
 	}
 	defer f.Close()
 
-	c.Content = append(c.Content, selected+"\n")
+	c.Content = append(c.Content, strings.TrimSpace(selected))
 	w := bufio.NewWriter(f)
-	for i:=0; i <len(c.Content); i++ {
-		w.WriteString(c.Content[i]+"\n")
+	for _, v := range c.Content {
+		w.WriteString(strings.TrimSpace(v) + "\n")
 	}
 
 	w.Flush()
