@@ -41,4 +41,4 @@ GLOBAL OPTIONS:
 
 <div align="center">
 <h3>See In Action</h3>
-<img src="https://github.com/ckalpakoglu/rofi-github/blob/master/.meta/rofi-github.gif">
+<img src="https://github.com/ckalpakoglu/rofi-github/blob/main/.meta/rofi-github.gif">
