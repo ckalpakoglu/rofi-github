@@ -3,6 +3,7 @@ package plugin
 import (
 	"bufio"
 	"log"
+	"net/url"
 	"os"
 	"strings"
 )
@@ -35,6 +36,10 @@ func LoadCache(fname string) Cache {
 }
 
 func (c *Cache) Update(selected string) error {
+	if _, err := url.Parse(selected); err != nil {
+		return err
+	}
+
 	f, err := os.OpenFile(c.fname, os.O_CREATE|os.O_RDWR|os.O_TRUNC, os.ModeAppend)
 	if err != nil {
 		return err

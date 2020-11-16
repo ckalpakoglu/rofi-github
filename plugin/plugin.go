@@ -6,8 +6,6 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/lithammer/fuzzysearch/fuzzy"
-
 	config "github.com/ckalpakoglu/rofi-github/config"
 )
 
@@ -54,18 +52,17 @@ func (p Plugin) Run(args ...string) error {
 		}
 
 		for _, v := range r {
-			if fuzzy.Match(selected, v.Name) {
+			// TODO: fuzzy match
+			if strings.Contains(v.Name, selected) {
 				selected = v.HTMLURL
 				break
 			}
 		}
+		if err := cache.Update(selected); err != nil {
+			return err
+		}
 	}
 
-	if err := cache.Update(selected); err != nil {
-		return err
-	}
-
-	fmt.Println("====>", selected)
 	cmd = exec.Command(p.browser, selected)
 	return cmd.Run()
 }

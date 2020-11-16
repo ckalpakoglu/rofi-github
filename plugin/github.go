@@ -19,7 +19,7 @@ func getAllRepoNames(user, token string) ([]repo, error) {
 	var url string
 	{
 		endpoint := "https://api.github.com/orgs"
-		url = fmt.Sprintf("%s/%s/repos", endpoint, user)
+		url = fmt.Sprintf("%s/%s/repos?per_page=1000", endpoint, user)
 	}
 
 	req, _ := http.NewRequest("GET", url, nil)

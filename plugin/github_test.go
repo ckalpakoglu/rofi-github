@@ -17,7 +17,7 @@ func TestClientReq(t *testing.T) {
 	}
 
 	for _, v := range r {
-		if fuzzy.Match("twrap", v.Name){
+		if fuzzy.Match("konda", v.Name){
 			fmt.Println("===", v)
 		}
 	}
