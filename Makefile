@@ -2,7 +2,7 @@ VERSION         := v0.1
 BUILD_NAME      := rofi-github
 BUILD_DIR       := _release
 BUILD_TIME      := $(shell date +%FT%T%z)
-GO_LDFLAGS      := -ldflags="-s -w -X main.version=${VERSION}"
+GO_LDFLAGS      := -ldflags="-s -w -X main.Version=${VERSION}"
 
 # checksum
 SHASUMCMD       := $(shell command -v sha256sum || command -v shasum; 2> /dev/null)
