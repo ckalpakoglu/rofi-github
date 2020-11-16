@@ -52,7 +52,7 @@ func (p Plugin) Run(args ...string) error {
 		}
 
 		for _, v := range r {
-			// TODO: fuzzy match
+			// TODO: do fuzzy match
 			if strings.Contains(v.Name, selected) {
 				selected = v.HTMLURL
 				break

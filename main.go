@@ -10,7 +10,7 @@ import (
 	"github.com/ckalpakoglu/rofi-github/plugin"
 )
 
-var Version = "v0.0"
+var Version = ""
 
 func main() {
 	home := os.Getenv("HOME")
